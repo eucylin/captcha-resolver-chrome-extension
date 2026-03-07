@@ -109,9 +109,10 @@ async function getImageData(el: HTMLImageElement | HTMLCanvasElement): Promise<s
 }
 
 function saveToHistory(text: string): void {
+  const sanitized = text.slice(0, 20);
   chrome.storage.local.get({ history: [] }, (data) => {
     const history = data.history as Array<{ text: string; time: number }>;
-    history.unshift({ text, time: Date.now() });
+    history.unshift({ text: sanitized, time: Date.now() });
     if (history.length > 10) history.length = 10;
     chrome.storage.local.set({ history });
   });

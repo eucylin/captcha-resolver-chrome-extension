@@ -22,10 +22,20 @@ export function showClickToFill(text: string): void {
 
   const toast = document.createElement('div');
   toast.className = 'toast';
-  toast.innerHTML = `
-    <div>CAPTCHA result: <span class="result">${escapeHtml(text)}</span></div>
-    <div class="hint">Click any input field to fill, press Esc to cancel</div>
-  `;
+
+  const resultDiv = document.createElement('div');
+  resultDiv.append('CAPTCHA result: ');
+  const resultSpan = document.createElement('span');
+  resultSpan.className = 'result';
+  resultSpan.textContent = text;
+  resultDiv.appendChild(resultSpan);
+  toast.appendChild(resultDiv);
+
+  const hintDiv = document.createElement('div');
+  hintDiv.className = 'hint';
+  hintDiv.textContent = 'Click any input field to fill, press Esc to cancel';
+  toast.appendChild(hintDiv);
+
   shadow.appendChild(toast);
 
   document.body.appendChild(host);
@@ -73,12 +83,6 @@ function cleanup(): void {
     document.removeEventListener('keydown', escHandler, true);
     escHandler = null;
   }
-}
-
-function escapeHtml(str: string): string {
-  const div = document.createElement('div');
-  div.textContent = str;
-  return div.innerHTML;
 }
 
 export function setupContextMenuListener(): void {

@@ -10,12 +10,15 @@ chrome.runtime.onInstalled.addListener(() => {
 
 // Message routing from content scripts
 chrome.runtime.onMessage.addListener((message: MessageRequest, sender, sendResponse) => {
-  if (message.type === 'OCR_REQUEST') {
+  // Validate sender is our own extension
+  if (sender.id !== chrome.runtime.id) return false;
+
+  if (message.type === 'OCR_REQUEST' && typeof message.imageData === 'string') {
     handleOcrRequest(message.imageData).then(sendResponse);
     return true;
   }
 
-  if (message.type === 'FETCH_IMAGE') {
+  if (message.type === 'FETCH_IMAGE' && typeof message.url === 'string') {
     handleFetchImage(message.url).then(sendResponse);
     return true;
   }
@@ -63,10 +66,14 @@ function notifyTab(tabId: number, message: ContextMenuOcrResult): void {
   chrome.tabs.sendMessage(tabId, message);
 }
 
+const MAX_OCR_RESULT_LENGTH = 20;
+
 function saveToHistory(imageUrl: string, text: string): void {
+  // Sanitize: CAPTCHA results should be short alphanumeric
+  const sanitized = text.slice(0, MAX_OCR_RESULT_LENGTH);
   chrome.storage.local.get({ history: [] }, (data) => {
     const history = data.history as Array<{ url: string; text: string; time: number }>;
-    history.unshift({ url: imageUrl, text, time: Date.now() });
+    history.unshift({ url: imageUrl, text: sanitized, time: Date.now() });
     if (history.length > 10) history.length = 10;
     chrome.storage.local.set({ history });
   });

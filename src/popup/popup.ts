@@ -111,10 +111,13 @@ function fileToDataUrl(file: File): Promise<string> {
 
 // Load and render history
 function renderHistory(history: Array<{ text: string; time: number }>): void {
-  historyList.innerHTML = '';
+  while (historyList.firstChild) historyList.firstChild.remove();
 
   if (history.length === 0) {
-    historyList.innerHTML = '<li class="empty">No records yet</li>';
+    const emptyLi = document.createElement('li');
+    emptyLi.className = 'empty';
+    emptyLi.textContent = 'No records yet';
+    historyList.appendChild(emptyLi);
     return;
   }
 
