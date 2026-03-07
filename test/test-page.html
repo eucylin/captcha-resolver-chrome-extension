@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <title>CAPTCHA Detection Test Page</title>
+  <style>
+    body { font-family: sans-serif; padding: 40px; }
+    .test-case { border: 1px solid #ccc; padding: 20px; margin: 20px 0; border-radius: 8px; }
+    .test-case h3 { margin-top: 0; }
+    .score { color: #666; font-size: 14px; }
+    form { display: flex; gap: 10px; align-items: center; }
+  </style>
+</head>
+<body>
+  <h1>CAPTCHA Solver - Test Page</h1>
+
+  <div class="test-case">
+    <h3>Test 1: High-score CAPTCHA (should detect)</h3>
+    <p class="score">Expected: size(+2) + keyword(+3) + onclick(+2) = 7</p>
+    <form>
+      <img id="captcha1" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAAAoCAYAAAAIeF9DAAAA0ElEQVR4nO3YMQ6AIBBA0cH7H9otjIWFhYkxRkXn/WQTCpjMlABjKQEAAAAAAAAAAOC/TdVB59wce85MF6RLAIA/N8Z4bM+5b3MAAAAAAAAAANwx5z7n3M+x55xzP48BAAAAAAAAAMB6Y4z7euZae86xH/M5BgAAAAAAAACA1b7/ss45H89L0eU2BwAAAAAAAAAAWO/7L+t6Zl3PjPvVaQcAAAAAAAAAgD/4/GVdzzwvjKoLAAAAAAAAAAAA4E9tMYV7seTijSQAAAAASUVORK5CYII="
+           class="captcha-img" onclick="this.src=this.src+'?t='+Date.now()"
+           width="100" height="40" alt="captcha verification code">
+      <input type="text" name="captcha" placeholder="Enter captcha">
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+  <div class="test-case">
+    <h3>Test 2: Medium-score (keyword + size)</h3>
+    <p class="score">Expected: size(+2) + keyword(+3) = 5</p>
+    <form>
+      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAAAoCAYAAAAIeF9DAAAA0ElEQVR4nO3YMQ6AIBBA0cH7H9otjIWFhYkxRkXn/WQTCpjMlABjKQEAAAAAAAAAAOC/TdVB59wce85MF6RLAIA/N8Z4bM+5b3MAAAAAAAAAANwx5z7n3M+x55xzP48BAAAAAAAAAMB6Y4z7euZae86xH/M5BgAAAAAAAACA1b7/ss45H89L0eU2BwAAAAAAAAAAWO/7L+t6Zl3PjPvVaQcAAAAAAAAAgD/4/GVdzzwvjKoLAAAAAAAAAAAA4E9tMYV7seTijSQAAAAASUVORK5CYII="
+           id="verifycode" width="120" height="40">
+      <input type="text" name="vcode" placeholder="Verification code">
+    </form>
+  </div>
+
+  <div class="test-case">
+    <h3>Test 3: Low-score logo (should NOT detect)</h3>
+    <p class="score">Expected: in nav(-2), no keywords, large size = 0 or negative</p>
+    <nav>
+      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAABkCAYAAADDhn8LAAAA0ElEQVR4nO3BMQEAAADCoPVP7WsIoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOBtwMnkAAFMt0hIAAAAAElFTkSuQmCC"
+           width="200" height="100" alt="Company Logo">
+    </nav>
+  </div>
+
+  <div class="test-case">
+    <h3>Test 4: Dynamic src with refresh link</h3>
+    <p class="score">Expected: size(+2) + keyword(+3) + link(+2) + dynamic(+1) = 8</p>
+    <form>
+      <a href="javascript:void(0)">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFoAAAAgCAYAAACeeTniAAAA0ElEQVR4nO3YMQ6AIBBA0cH7H9otjIWFhYkxRkXn/WQTCpjMlABjKQEAAAAA+Lmpyu6c+1n2nJMuSJcA4M+NMe7rmXM/5gAAAAAAgDvm3Oec+1n2nHPu5xgAAAAAAIC1xhj39cy19pxjP+ZzDAAAAACAtb7/ss45788L0eU2BwAAAADAWt9/Wdcz63pm3K9OOwAAAACA/+HzL+t65nlhVF0AAAAAAAAAcC+2mMK9WHLxRhIAAABgofE3fk86OEmfAlkAAAAASUVORK5CYII="
+               class="captcha" width="90" height="32"
+               alt="Click to refresh captcha">
+      </a>
+      <input type="text" id="authcode" placeholder="Auth code">
+    </form>
+  </div>
+</body>
+</html>

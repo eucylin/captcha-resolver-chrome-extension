@@ -1,0 +1,178 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 320px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 14px;
+  color: #333;
+  background: #fafafa;
+}
+
+.container {
+  padding: 16px;
+}
+
+h1 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: #1a1a1a;
+}
+
+h2 {
+  font-size: 13px;
+  font-weight: 600;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.section {
+  margin-bottom: 16px;
+}
+
+/* Toggle Switch */
+.toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.toggle input {
+  display: none;
+}
+
+.slider {
+  width: 40px;
+  height: 22px;
+  background: #ccc;
+  border-radius: 11px;
+  position: relative;
+  transition: background 0.2s;
+}
+
+.slider::after {
+  content: '';
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  background: #fff;
+  border-radius: 50%;
+  top: 2px;
+  left: 2px;
+  transition: transform 0.2s;
+}
+
+.toggle input:checked + .slider {
+  background: #4caf50;
+}
+
+.toggle input:checked + .slider::after {
+  transform: translateX(18px);
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* Drop Zone */
+.drop-zone {
+  border: 2px dashed #ccc;
+  border-radius: 8px;
+  padding: 24px;
+  text-align: center;
+  color: #999;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.drop-zone:hover,
+.drop-zone.dragover {
+  border-color: #4caf50;
+  background: #f0fff0;
+  color: #4caf50;
+}
+
+.drop-zone.loading {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* Result */
+.result {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  padding: 8px 12px;
+  background: #e8f5e9;
+  border-radius: 6px;
+}
+
+.result-label {
+  color: #666;
+  font-size: 12px;
+}
+
+.result-text {
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 2px;
+  color: #1a1a1a;
+  flex: 1;
+}
+
+.copy-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+
+.copy-btn:hover {
+  background: rgba(0,0,0,0.05);
+}
+
+/* History */
+.history-list {
+  list-style: none;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.history-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  border-bottom: 1px solid #eee;
+  font-size: 13px;
+}
+
+.history-list li:last-child {
+  border-bottom: none;
+}
+
+.history-list .empty {
+  color: #999;
+  text-align: center;
+  padding: 12px;
+}
+
+.history-list .text {
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.history-list .time {
+  color: #999;
+  font-size: 11px;
+}
