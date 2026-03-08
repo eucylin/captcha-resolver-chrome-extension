@@ -59,6 +59,11 @@ module.exports = (env, argv) => {
             to: 'wasm/[name][ext]',
             noErrorOnMissing: true,
           },
+          {
+            from: 'node_modules/onnxruntime-web/dist/ort-wasm-simd-threaded*.mjs',
+            to: 'wasm/[name][ext]',
+            noErrorOnMissing: true,
+          },
         ],
       }),
       new HtmlWebpackPlugin({

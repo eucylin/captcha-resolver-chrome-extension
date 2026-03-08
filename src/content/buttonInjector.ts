@@ -11,7 +11,7 @@ export function injectButton(candidate: CaptchaCandidate): void {
   // Create shadow host
   const host = document.createElement('span');
   host.className = 'captcha-solver-host';
-  const shadow = host.attachShadow({ mode: 'closed' });
+  const shadow = host.attachShadow({ mode: 'open' });
 
   // Inject styles
   const style = document.createElement('style');
@@ -50,8 +50,6 @@ export function injectButton(candidate: CaptchaCandidate): void {
       });
 
       if (response.error) throw new Error(response.error);
-
-      // Fill input
       if (input && response.text) {
         input.value = response.text;
         input.dispatchEvent(new Event('input', { bubbles: true }));

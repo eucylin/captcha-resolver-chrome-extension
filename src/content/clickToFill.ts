@@ -14,7 +14,7 @@ export function showClickToFill(text: string): void {
   // Create toast with shadow DOM
   const host = document.createElement('div');
   host.id = 'captcha-solver-toast';
-  const shadow = host.attachShadow({ mode: 'closed' });
+  const shadow = host.attachShadow({ mode: 'open' });
 
   const style = document.createElement('style');
   style.textContent = TOAST_STYLES;
