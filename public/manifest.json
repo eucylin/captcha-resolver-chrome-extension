@@ -1,8 +1,9 @@
 {
   "manifest_version": 3,
-  "name": "CAPTCHA Solver",
+  "name": "__MSG_extName__",
   "version": "1.0.0",
-  "description": "Automatically detect and solve text-based CAPTCHAs using local OCR",
+  "description": "__MSG_extDescription__",
+  "default_locale": "en",
   "permissions": ["activeTab", "contextMenus", "offscreen", "storage"],
   "background": {
     "service_worker": "background.js"

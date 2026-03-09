@@ -11,6 +11,11 @@ export function showClickToFill(text: string): void {
 
   currentText = text;
 
+  // Auto-copy to clipboard
+  navigator.clipboard.writeText(text).catch(() => {
+    // Clipboard API may fail without focus/permission; silently ignore
+  });
+
   // Create toast with shadow DOM
   const host = document.createElement('div');
   host.id = 'captcha-solver-toast';
@@ -24,7 +29,7 @@ export function showClickToFill(text: string): void {
   toast.className = 'toast';
 
   const resultDiv = document.createElement('div');
-  resultDiv.append('CAPTCHA result: ');
+  resultDiv.append(chrome.i18n.getMessage('captchaResult'));
   const resultSpan = document.createElement('span');
   resultSpan.className = 'result';
   resultSpan.textContent = text;
@@ -33,7 +38,7 @@ export function showClickToFill(text: string): void {
 
   const hintDiv = document.createElement('div');
   hintDiv.className = 'hint';
-  hintDiv.textContent = 'Click any input field to fill, press Esc to cancel';
+  hintDiv.textContent = chrome.i18n.getMessage('clickToFillHint');
   toast.appendChild(hintDiv);
 
   shadow.appendChild(toast);

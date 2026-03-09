@@ -1,6 +1,16 @@
 import './popup.css';
 import type { OcrResponse } from '../shared/messages';
 
+// Apply i18n translations to elements with data-i18n attributes
+document.querySelectorAll('[data-i18n]').forEach((el) => {
+  const key = el.getAttribute('data-i18n')!;
+  el.textContent = chrome.i18n.getMessage(key);
+});
+document.querySelectorAll('[data-i18n-title]').forEach((el) => {
+  const key = el.getAttribute('data-i18n-title')!;
+  el.setAttribute('title', chrome.i18n.getMessage(key));
+});
+
 const autoDetectToggle = document.getElementById('autoDetect') as HTMLInputElement;
 const dropZone = document.getElementById('dropZone') as HTMLDivElement;
 const fileInput = document.getElementById('fileInput') as HTMLInputElement;
@@ -67,7 +77,7 @@ copyBtn.addEventListener('click', () => {
 
 async function recognizeFile(file: File): Promise<void> {
   dropZone.classList.add('loading');
-  dropZone.querySelector('p')!.textContent = 'Recognizing...';
+  dropZone.querySelector('p')!.textContent = chrome.i18n.getMessage('recognizing');
 
   try {
     const dataUrl = await fileToDataUrl(file);
@@ -92,11 +102,11 @@ async function recognizeFile(file: File): Promise<void> {
       });
     }
   } catch (err) {
-    resultText.textContent = `Error: ${err}`;
+    resultText.textContent = chrome.i18n.getMessage('errorPrefix', [String(err)]);
     manualResult.hidden = false;
   } finally {
     dropZone.classList.remove('loading');
-    dropZone.querySelector('p')!.textContent = 'Drag & drop or paste an image';
+    dropZone.querySelector('p')!.textContent = chrome.i18n.getMessage('dropZoneHint');
   }
 }
 
@@ -116,7 +126,7 @@ function renderHistory(history: Array<{ text: string; time: number }>): void {
   if (history.length === 0) {
     const emptyLi = document.createElement('li');
     emptyLi.className = 'empty';
-    emptyLi.textContent = 'No records yet';
+    emptyLi.textContent = chrome.i18n.getMessage('noRecords');
     historyList.appendChild(emptyLi);
     return;
   }

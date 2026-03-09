@@ -47,6 +47,7 @@ module.exports = (env, argv) => {
       new CopyWebpackPlugin({
         patterns: [
           { from: 'public/manifest.json', to: '.' },
+          { from: 'public/_locales', to: '_locales' },
           { from: 'public/icons', to: 'icons', noErrorOnMissing: true },
           { from: 'src/offscreen/offscreen.html', to: '.' },
           {

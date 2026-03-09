@@ -1,0 +1,52 @@
+{
+  "extName": {
+    "message": "BlazCaptcha: 免費、輕量的圖片驗證碼填入工具"
+  },
+  "extDescription": {
+    "message": "使用本地 OCR 即時辨識圖片驗證碼。三種使用方式：點擊驗證碼旁的按鈕、右鍵點擊圖片、或將圖片貼到彈出視窗。無需伺服器、無需 API 金鑰、無需註冊，完全免費且保護隱私。"
+  },
+  "autoDetect": {
+    "message": "\u81ea\u52d5\u5075\u6e2c"
+  },
+  "manualRecognition": {
+    "message": "\u624b\u52d5\u8fa8\u8b58"
+  },
+  "dropZoneHint": {
+    "message": "\u62d6\u653e\u6216\u8cbc\u4e0a\u5716\u7247"
+  },
+  "resultLabel": {
+    "message": "\u7d50\u679c\uff1a"
+  },
+  "copyTitle": {
+    "message": "\u8907\u88fd"
+  },
+  "recentHistory": {
+    "message": "\u6700\u8fd1\u7d00\u9304"
+  },
+  "noRecords": {
+    "message": "\u5c1a\u7121\u7d00\u9304"
+  },
+  "recognizing": {
+    "message": "\u8fa8\u8b58\u4e2d..."
+  },
+  "errorPrefix": {
+    "message": "\u932f\u8aa4\uff1a$error$",
+    "placeholders": {
+      "error": {
+        "content": "$1"
+      }
+    }
+  },
+  "contextMenuTitle": {
+    "message": "\u8fa8\u8b58\u9019\u500b\u9a57\u8b49\u78bc"
+  },
+  "recognizeButton": {
+    "message": "\u8fa8\u8b58\u9a57\u8b49\u78bc"
+  },
+  "captchaResult": {
+    "message": "\u9a57\u8b49\u78bc\u7d50\u679c\uff1a"
+  },
+  "clickToFillHint": {
+    "message": "\u5df2\u8907\u88fd\uff01\u9ede\u64ca\u4efb\u610f\u8f38\u5165\u6846\u586b\u5165\uff0c\u6216\u6309 Esc \u53d6\u6d88"
+  }
+}

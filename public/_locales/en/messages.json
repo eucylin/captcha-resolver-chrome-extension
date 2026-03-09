@@ -1,0 +1,52 @@
+{
+  "extName": {
+    "message": "BlazCaptcha: Free and Lightweight Image Captcha Solver"
+  },
+  "extDescription": {
+    "message": "Auto-detect and solve image CAPTCHAs instantly with local OCR. 3 ways to use: click the button next to CAPTCHA, right-click any image, or paste an image into the popup. No server, no API key, no signup — 100% free and privacy-friendly."
+  },
+  "autoDetect": {
+    "message": "Auto Detect"
+  },
+  "manualRecognition": {
+    "message": "Manual Recognition"
+  },
+  "dropZoneHint": {
+    "message": "Drag & drop or paste an image"
+  },
+  "resultLabel": {
+    "message": "Result:"
+  },
+  "copyTitle": {
+    "message": "Copy"
+  },
+  "recentHistory": {
+    "message": "Recent History"
+  },
+  "noRecords": {
+    "message": "No records yet"
+  },
+  "recognizing": {
+    "message": "Recognizing..."
+  },
+  "errorPrefix": {
+    "message": "Error: $error$",
+    "placeholders": {
+      "error": {
+        "content": "$1"
+      }
+    }
+  },
+  "contextMenuTitle": {
+    "message": "Recognize this CAPTCHA"
+  },
+  "recognizeButton": {
+    "message": "Recognize CAPTCHA"
+  },
+  "captchaResult": {
+    "message": "CAPTCHA result: "
+  },
+  "clickToFillHint": {
+    "message": "Copied! Click any input field to fill, or press Esc to cancel"
+  }
+}

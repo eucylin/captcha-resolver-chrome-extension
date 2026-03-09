@@ -21,7 +21,8 @@ export function injectButton(candidate: CaptchaCandidate): void {
   // Create button
   const btn = document.createElement('button');
   btn.className = 'captcha-btn';
-  btn.title = 'Recognize CAPTCHA';
+  btn.title = chrome.i18n.getMessage('recognizeButton');
+
   btn.textContent = '🔍';
   shadow.appendChild(btn);
 
