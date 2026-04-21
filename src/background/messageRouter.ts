@@ -1,5 +1,5 @@
 import { ensureOffscreen } from './offscreenManager';
-import type { OcrRequest, OcrResponse, FetchImageResponse } from '../shared/messages';
+import type { OcrRequest, OcrResponse, CaptureTabResponse } from '../shared/messages';
 
 const MAX_IMAGE_DATA_SIZE = 2 * 1024 * 1024; // 2MB base64
 
@@ -27,67 +27,17 @@ export async function handleOcrRequest(imageData: string): Promise<OcrResponse> 
   });
 }
 
-function isAllowedUrl(url: string): boolean {
+export async function handleCaptureTab(tabId?: number): Promise<CaptureTabResponse> {
   try {
-    const parsed = new URL(url);
-    if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:' && !parsed.protocol.startsWith('data:')) {
-      return false;
+    const windowId = tabId != null
+      ? (await chrome.tabs.get(tabId)).windowId
+      : chrome.windows.WINDOW_ID_CURRENT;
+    const dataUrl = await chrome.tabs.captureVisibleTab(windowId, { format: 'png' });
+    if (!dataUrl) {
+      return { type: 'CAPTURE_TAB_RESPONSE', error: 'captureVisibleTab returned empty result' };
     }
-    // Block private/internal IP ranges
-    const hostname = parsed.hostname;
-    if (
-      hostname === 'localhost' ||
-      hostname === '127.0.0.1' ||
-      hostname === '::1' ||
-      hostname.startsWith('10.') ||
-      hostname.startsWith('192.168.') ||
-      /^172\.(1[6-9]|2\d|3[01])\./.test(hostname) ||
-      hostname.endsWith('.local')
-    ) {
-      return false;
-    }
-    return true;
-  } catch {
-    return false;
-  }
-}
-
-export async function handleFetchImage(url: string): Promise<FetchImageResponse> {
-  if (typeof url !== 'string') {
-    return { type: 'FETCH_IMAGE_RESPONSE', error: 'Invalid URL: expected string' };
-  }
-  if (!isAllowedUrl(url)) {
-    return { type: 'FETCH_IMAGE_RESPONSE', error: 'URL not allowed: must be http/https and non-private' };
-  }
-
-  try {
-    const response = await fetch(url);
-
-    // Validate content-type is an image
-    const contentType = response.headers.get('content-type') || '';
-    if (!contentType.startsWith('image/')) {
-      return { type: 'FETCH_IMAGE_RESPONSE', error: `Invalid content-type: ${contentType}` };
-    }
-
-    const blob = await response.blob();
-
-    // Reject oversized images
-    if (blob.size > MAX_IMAGE_DATA_SIZE) {
-      return { type: 'FETCH_IMAGE_RESPONSE', error: 'Image exceeds 2MB size limit' };
-    }
-
-    const reader = new FileReader();
-
-    return new Promise((resolve) => {
-      reader.onloadend = () => {
-        resolve({ type: 'FETCH_IMAGE_RESPONSE', dataUrl: reader.result as string });
-      };
-      reader.onerror = () => {
-        resolve({ type: 'FETCH_IMAGE_RESPONSE', error: 'Failed to read image' });
-      };
-      reader.readAsDataURL(blob);
-    });
+    return { type: 'CAPTURE_TAB_RESPONSE', dataUrl };
   } catch (err) {
-    return { type: 'FETCH_IMAGE_RESPONSE', error: String(err) };
+    return { type: 'CAPTURE_TAB_RESPONSE', error: (err as Error).message };
   }
 }

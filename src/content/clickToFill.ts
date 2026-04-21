@@ -1,5 +1,4 @@
 import { TOAST_STYLES } from './styles';
-import type { ContextMenuOcrResult } from '../shared/messages';
 
 let currentToast: HTMLElement | null = null;
 let currentText: string | null = null;
@@ -90,17 +89,3 @@ function cleanup(): void {
   }
 }
 
-export function setupContextMenuListener(): void {
-  chrome.runtime.onMessage.addListener((message: ContextMenuOcrResult) => {
-    if (message.type !== 'CONTEXT_MENU_OCR_RESULT') return;
-
-    if (message.error) {
-      console.error('[CAPTCHA Solver] Context menu OCR error:', message.error);
-      return;
-    }
-
-    if (message.text) {
-      showClickToFill(message.text);
-    }
-  });
-}

@@ -1,6 +1,7 @@
 import { BUTTON_STYLES } from './styles';
 import type { CaptchaCandidate } from './detector';
-import type { OcrResponse, FetchImageResponse } from '../shared/messages';
+import type { OcrResponse } from '../shared/messages';
+import { captureElement } from './captureUtils';
 
 export function injectButton(candidate: CaptchaCandidate): void {
   const { element, input } = candidate;
@@ -83,7 +84,7 @@ async function getImageData(el: HTMLImageElement | HTMLCanvasElement): Promise<s
     return el.toDataURL('image/png');
   }
 
-  // Try same-origin canvas approach first
+  // Same-origin: draw into canvas directly — no network, no refetch.
   try {
     const canvas = document.createElement('canvas');
     const img = el as HTMLImageElement;
@@ -93,17 +94,10 @@ async function getImageData(el: HTMLImageElement | HTMLCanvasElement): Promise<s
     ctx.drawImage(img, 0, 0);
     return canvas.toDataURL('image/png');
   } catch {
-    // Cross-origin: fetch via background service worker
-    const response: FetchImageResponse = await chrome.runtime.sendMessage({
-      type: 'FETCH_IMAGE',
-      url: el.src || (el as HTMLImageElement).currentSrc,
-    });
-
-    if (response.error || !response.dataUrl) {
-      throw new Error(response.error || 'Failed to fetch image');
-    }
-
-    return response.dataUrl;
+    // Cross-origin canvas is tainted. Capturing the visible tab reads
+    // already-painted pixels, so the server is never re-hit and the
+    // CAPTCHA token on screen stays valid.
+    return captureElement(el);
   }
 }
 

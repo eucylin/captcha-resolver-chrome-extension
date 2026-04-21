@@ -9,27 +9,19 @@ export interface OcrResponse {
   error?: string;
 }
 
-export interface ContextMenuOcrRequest {
-  type: 'CONTEXT_MENU_OCR';
-  imageUrl: string;
-  tabId: number;
+export interface CaptureTabRequest {
+  type: 'CAPTURE_TAB';
 }
 
-export interface ContextMenuOcrResult {
-  type: 'CONTEXT_MENU_OCR_RESULT';
-  text?: string;
-  error?: string;
-}
-
-export interface FetchImageRequest {
-  type: 'FETCH_IMAGE';
-  url: string;
-}
-
-export interface FetchImageResponse {
-  type: 'FETCH_IMAGE_RESPONSE';
+export interface CaptureTabResponse {
+  type: 'CAPTURE_TAB_RESPONSE';
   dataUrl?: string;
   error?: string;
+}
+
+export interface ContextMenuCaptureRequest {
+  type: 'CONTEXT_MENU_CAPTURE';
+  srcUrl: string;
 }
 
 export interface GetSettingsRequest {
@@ -43,12 +35,11 @@ export interface SettingsResponse {
 
 export type MessageRequest =
   | OcrRequest
-  | ContextMenuOcrRequest
-  | FetchImageRequest
+  | CaptureTabRequest
+  | ContextMenuCaptureRequest
   | GetSettingsRequest;
 
 export type MessageResponse =
   | OcrResponse
-  | ContextMenuOcrResult
-  | FetchImageResponse
+  | CaptureTabResponse
   | SettingsResponse;
