@@ -11,6 +11,7 @@ module.exports = (env, argv) => {
       content: './src/content/index.ts',
       offscreen: './src/offscreen/ocrEngine.ts',
       popup: './src/popup/popup.ts',
+      welcome: './src/welcome/welcome.ts',
     },
     output: {
       path: path.resolve(__dirname, 'dist'),
@@ -71,6 +72,11 @@ module.exports = (env, argv) => {
         template: './src/popup/popup.html',
         filename: 'popup.html',
         chunks: ['popup'],
+      }),
+      new HtmlWebpackPlugin({
+        template: './public/welcome.html',
+        filename: 'welcome.html',
+        chunks: ['welcome'],
       }),
     ],
     devtool: isProd ? false : 'inline-source-map',
