@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
-<title>BlazCaptcha Demo Screenshots</title>
+<title>BlazCaptcha 截圖 (正體中文)</title>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f0f2f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Microsoft JhengHei', sans-serif; background: #f0f2f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
 
 .card {
   width: 1280px; height: 800px; background: white; border-radius: 16px;
@@ -146,73 +146,73 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
     <img src="icons/icon128.png" alt="BlazCaptcha">
     <div>
       <h1>BlazCaptcha</h1>
-      <div class="subtitle">Free and Lightweight Image CAPTCHA Solver — 3 Ways to Use</div>
+      <div class="subtitle">免費、輕量的圖片驗證碼填入工具 — 三種使用方式</div>
     </div>
   </div>
 
   <div class="content">
-    <!-- Panel 1: Click Button -->
+    <!-- Panel 1: 點擊按鈕 -->
     <div class="panel">
-      <span class="panel-number">METHOD 1</span>
-      <h2>🔍 Click the Button</h2>
-      <p>Auto-detected CAPTCHA gets a solve button. Click it to auto-fill the answer.</p>
+      <span class="panel-number">方法 1</span>
+      <h2>🔍 點擊按鈕</h2>
+      <p>自動偵測到的驗證碼旁會出現辨識按鈕，點擊即可自動填入答案。</p>
       <div class="demo-area">
         <div class="captcha-demo">
-          <div style="font-size:12px;color:#666;align-self:flex-start;">Retype the characters:</div>
+          <div style="font-size:12px;color:#666;align-self:flex-start;">請輸入驗證碼：</div>
           <div class="captcha-img-row">
             <div class="captcha-img">X7kP2m</div>
             <div class="solve-btn success">✓</div>
-            <div class="arrow-label" style="position:relative; top:0;">Click!</div>
+            <div class="arrow-label" style="position:relative; top:0;">點擊！</div>
           </div>
           <div class="input-row">
             <input class="captcha-input" value="X7kP2m" readonly>
-            <button class="validate-btn">Validate</button>
+            <button class="validate-btn">驗證</button>
           </div>
-          <div class="arrow-label green" style="position:relative;">Auto-filled!</div>
+          <div class="arrow-label green" style="position:relative;">自動填入！</div>
         </div>
       </div>
     </div>
 
-    <!-- Panel 2: Right-Click -->
+    <!-- Panel 2: 右鍵點擊 -->
     <div class="panel">
-      <span class="panel-number">METHOD 2</span>
-      <h2>🖱️ Right-Click Image</h2>
-      <p>Right-click any CAPTCHA image and select "Recognize this CAPTCHA" from the menu.</p>
+      <span class="panel-number">方法 2</span>
+      <h2>🖱️ 右鍵點擊圖片</h2>
+      <p>在任何驗證碼圖片上按右鍵，選擇「辨識這個驗證碼」。</p>
       <div class="demo-area" style="align-items: flex-start; padding: 20px;">
         <div style="display:flex; gap:16px; align-items: flex-start; width:100%;">
           <div class="captcha-img" style="width:140px; height:40px; font-size:20px;">Ab3Qz</div>
           <div class="context-menu">
-            <div class="ctx-item"><span class="icon">🔗</span> Open Image</div>
-            <div class="ctx-item"><span class="icon">💾</span> Save Image As...</div>
+            <div class="ctx-item"><span class="icon">🔗</span> 開啟圖片</div>
+            <div class="ctx-item"><span class="icon">💾</span> 圖片另存為...</div>
             <div class="ctx-sep"></div>
-            <div class="ctx-item highlight"><span class="icon">🔍</span> <strong>Recognize this CAPTCHA</strong></div>
+            <div class="ctx-item highlight"><span class="icon">🔍</span> <strong>辨識這個驗證碼</strong></div>
             <div class="ctx-sep"></div>
-            <div class="ctx-item"><span class="icon">📋</span> Copy Image</div>
+            <div class="ctx-item"><span class="icon">📋</span> 複製圖片</div>
           </div>
         </div>
         <div class="toast-demo">
-          <div>CAPTCHA result: <span class="result">Ab3Qz</span></div>
-          <div class="hint">Copied! Click any input to fill.</div>
+          <div>驗證碼結果：<span class="result">Ab3Qz</span></div>
+          <div class="hint">已複製！點擊任意輸入框填入。</div>
         </div>
       </div>
     </div>
 
-    <!-- Panel 3: Popup Paste -->
+    <!-- Panel 3: 貼上圖片 -->
     <div class="panel">
-      <span class="panel-number">METHOD 3</span>
-      <h2>📋 Paste in Popup</h2>
-      <p>Open the extension popup, paste or drop a CAPTCHA image to recognize it.</p>
+      <span class="panel-number">方法 3</span>
+      <h2>📋 貼上圖片到彈出視窗</h2>
+      <p>點擊擴充功能圖示開啟彈出視窗，貼上或拖放驗證碼圖片即可辨識。</p>
       <div class="demo-area">
         <div class="popup-mock">
           <div class="popup-header">BlazCaptcha</div>
           <div class="popup-section">
-            <h3>Manual Recognition</h3>
+            <h3>手動辨識</h3>
             <div class="drop-zone">
-              📎 Drag & drop or paste an image
+              📎 拖放或貼上圖片
             </div>
             <div class="popup-result">
               <div>
-                <div class="label">Result:</div>
+                <div class="label">結果：</div>
                 <div class="value">Hn4Wp9</div>
               </div>
               <button class="copy-btn">📋</button>
