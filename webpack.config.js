@@ -56,6 +56,8 @@ module.exports = (env, argv) => {
             to: 'models/[name][ext]',
             noErrorOnMissing: true,
           },
+          // Letter-case probe for common_old.onnx (see scripts/case-probe/)
+          { from: 'public/models', to: 'models' },
           {
             from: 'node_modules/onnxruntime-web/dist/*.wasm',
             to: 'wasm/[name][ext]',

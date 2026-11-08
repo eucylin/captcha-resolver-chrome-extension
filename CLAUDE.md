@@ -8,7 +8,7 @@ BlazCaptcha is a Chrome extension (Manifest v3) that auto-detects and solves ima
 
 - **Language:** TypeScript 5.7, targeting ES2020
 - **Bundler:** Webpack 5 with ts-loader
-- **OCR Engine:** ddddocr-node (ONNX models) + onnxruntime-web (WASM runtime)
+- **OCR Engine:** ddddocr `common_old` ONNX model (shipped via ddddocr-node) + onnxruntime-web (WASM runtime) + Jimp (preprocessing)
 - **Chrome APIs:** activeTab, contextMenus, offscreen, storage, tabs.captureVisibleTab (with `<all_urls>` host permission)
 - **i18n:** en, zh_TW via `chrome.i18n` and `_locales/`
 
@@ -31,7 +31,8 @@ src/
 │   ├── clickToFill.ts     # Toast + click-any-input-to-fill mode
 │   └── styles.ts          # Shadow DOM CSS styles
 ├── offscreen/        # Offscreen document (runs WASM OCR engine)
-│   ├── ocrEngine.ts       # ddddocr-node initialization and inference
+│   ├── ocrEngine.ts       # Loads common_old.onnx via onnxruntime-web, ddddocr preprocessing, inference
+│   ├── caseDecoder.ts     # Pure CTC decode + letter-case recovery (case probe + CAPTCHA-level case prior)
 │   └── offscreen.html     # Minimal HTML host
 ├── popup/            # Extension popup UI
 │   ├── popup.html         # Template with data-i18n attributes
@@ -68,7 +69,8 @@ Output goes to `dist/`. Webpack copies: manifest, _locales, icons, ONNX models, 
 ## Testing
 
 ```bash
-node test/test-detector.mjs    # Unit tests for CAPTCHA detection scoring
+node test/test-detector.mjs       # Unit tests for CAPTCHA detection scoring
+node test/test-case-decoder.mjs   # Case recovery: unit tests + real model on test/fixtures/case/
 ```
 
 Manual test page: `test/test-page.html` (open in browser with extension loaded).
@@ -82,6 +84,7 @@ Manual test page: `test/test-page.html` (open in browser with extension loaded).
 - **Size limit** of 2MB on base64 image data
 - **OCR results** truncated to 20 characters before storage
 - **Lazy init** for offscreen document with 5-minute idle auto-close
+- **Letter case** — the ddddocr model outputs almost only lowercase; `caseDecoder.ts` restores case with `public/models/case_probe.bin`, a linear probe over the logits that is tied to `common_old.onnx`. If the model changes, retrain it with `scripts/case-probe/`. If the probe fails to load or mismatches, OCR falls back to raw model output.
 - **i18n** via `chrome.i18n.getMessage()` — all user-facing strings must be in `_locales/`
 
 ## Security Rules
@@ -97,4 +100,5 @@ Manual test page: `test/test-page.html` (open in browser with extension loaded).
 - `public/manifest.json` — Extension manifest
 - `public/_locales/` — i18n translations (en, zh_TW)
 - `public/icons/` — Extension icons (16, 48, 128px + button20 + store_icon128)
+- `public/models/case_probe.bin` — Letter-case probe weights (copied to `dist/models/`; regenerate via `scripts/case-probe/`)
 - `screenshots/` — Chrome Web Store listing assets

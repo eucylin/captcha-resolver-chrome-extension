@@ -8,6 +8,7 @@
 - **Auto-Detection** — Automatically finds CAPTCHA images on the page and injects a solve button.
 - **Three Usage Methods** — Auto-detect button, right-click context menu, or popup manual input.
 - **Auto-Fill** — Recognizes nearby input fields and fills in the result automatically.
+- **Case-Aware** — Recovers uppercase / lowercase letters to match the image (the base OCR model on its own outputs almost only lowercase).
 - **Multi-Language** — Supports English and Traditional Chinese (繁體中文).
 
 ## How It Works
@@ -55,7 +56,8 @@ After rebuilding, click the refresh icon on `chrome://extensions/` to reload the
 
 - **TypeScript** + **Webpack 5** — Modern build pipeline
 - **Manifest v3** — Latest Chrome extension platform
-- **ddddocr-node** + **onnxruntime-web** — WASM-based OCR engine with ONNX models
+- **ddddocr** ONNX model (via ddddocr-node) + **onnxruntime-web** — WASM-based OCR engine
+- **Case probe** — A 32 KB linear probe over the model's logits that restores letter case (trained offline, see `scripts/case-probe/`)
 - **Shadow DOM** — Injected UI isolated from page styles
 
 ## Architecture
@@ -74,7 +76,8 @@ src/
 ## Testing
 
 ```bash
-node test/test-detector.mjs    # Run CAPTCHA detection unit tests
+node test/test-detector.mjs       # Run CAPTCHA detection unit tests
+node test/test-case-decoder.mjs   # Run letter-case recovery tests (unit + real model on fixtures)
 ```
 
 A manual test page is also available at `test/test-page.html` — open it in Chrome with the extension loaded to test button injection.
